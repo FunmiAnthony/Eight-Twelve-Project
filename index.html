@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>8:12 | Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- Top bar -->
+    <header class="top-bar">
+      <div class="container">
+        <div class="logo">8:12</div>
+        <div class="nav-text">Login</div>
+      </div>
+    </header>
+
+    <!-- Main content -->
+    <main class="page">
+      <div class="login-card">
+        <h1>Welcome back</h1>
+        <p class="tagline">Creating faith-based events and connections.</p>
+
+        <form id="loginForm">
+          <!-- Email -->
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input
+              id="email"
+              type="email"
+              placeholder="you@example.com"
+              required
+            />
+          </div>
+
+          <!-- Password + show/hide -->
+          <div class="form-group">
+            <label for="password">Password</label>
+            <div class="password-row">
+              <input
+                id="password"
+                type="password"
+                placeholder="Enter your password"
+                required
+              />
+              <button
+                type="button"
+                id="togglePassword"
+                class="toggle-password"
+              >
+                Show
+              </button>
+            </div>
+          </div>
+
+          <!-- Forgot password -->
+          <div class="forgot-row">
+            <button type="button" id="forgotPassword" class="forgot-link">
+              Forgot your password?
+            </button>
+          </div>
+
+          <!-- Login button -->
+          <button type="submit" class="btn-primary">Log in</button>
+
+          <!-- Helper text -->
+          <p class="helper-text">
+            Don’t have an account?
+            <a href="#">Create one</a>
+          </p>
+
+          <!-- Message area -->
+          <p id="message" class="message"></p>
+        </form>
+      </div>
+    </main>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="firebase-config.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
