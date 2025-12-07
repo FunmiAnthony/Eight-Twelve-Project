@@ -66,6 +66,24 @@ body.event-details-page {
   color: #9ca3af;
 }
 
+.logout-btn {
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  border: 1px solid #4b5563;
+  background: rgba(239, 68, 68, 0.1);
+  color: #fca5a5;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.logout-btn:hover {
+  background: rgba(239, 68, 68, 0.2);
+  border-color: #ef4444;
+  color: #fee2e2;
+}
+
 /* Center layout */
 .page {
   min-height: calc(100vh - 60px);

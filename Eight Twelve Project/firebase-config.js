@@ -3,12 +3,12 @@
 // You can find these in your Firebase Console: Project Settings > General > Your apps
 
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_AUTH_DOMAIN",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_STORAGE_BUCKET",
-  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-  appId: "YOUR_APP_ID"
+  apiKey: "AIzaSyA911B6LgtWDzlwXzW0H1vvtYLkt18UTj8",
+  authDomain: "eight-twelve-97519.firebaseapp.com",
+  projectId: "eight-twelve-97519",
+  storageBucket: "eight-twelve-97519.firebasestorage.app",
+  messagingSenderId: "350738313520",
+  appId: "1:350738313520:web:6e38f9d6f718448fce18f5"
 };
 
 // Initialize Firebase

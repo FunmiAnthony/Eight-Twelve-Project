@@ -481,6 +481,28 @@ window.addEventListener('beforeunload', () => {
   if (presenceUnsubscribe) presenceUnsubscribe();
 });
 
+// Logout functionality
+function setupLogout() {
+  const logoutBtn = document.getElementById('logoutBtn');
+  if (logoutBtn) {
+    logoutBtn.addEventListener('click', async () => {
+      const auth = getAuth();
+      if (auth) {
+        try {
+          await auth.signOut();
+          window.location.href = 'index.html';
+        } catch (error) {
+          console.error('Error signing out:', error);
+          alert('Failed to log out. Please try again.');
+        }
+      }
+    });
+  }
+}
+
 // Start checking auth state
 checkAuthState();
+
+// Setup logout button
+setupLogout();
 

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Firebase Config Verification</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #1a1a1a;
+            color: #fff;
+        }
+        .check {
+            color: #4ade80;
+            font-weight: bold;
+        }
+        .error {
+            color: #f87171;
+            font-weight: bold;
+        }
+        .info {
+            background: #1e293b;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+        h1 {
+            color: #60a5fa;
+        }
+    </style>
+</head>
+<body>
+    <h1>Firebase Configuration Verification</h1>
+    <div id="results"></div>
+
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="firebase-config.js"></script>
+    <script>
+        const resultsDiv = document.getElementById('results');
+        let checks = [];
+        let allPassed = true;
+
+        // Check 1: Firebase loaded
+        if (typeof firebase !== 'undefined') {
+            checks.push({ name: 'Firebase SDK loaded', status: true });
+        } else {
+            checks.push({ name: 'Firebase SDK loaded', status: false });
+            allPassed = false;
+        }
+
+        // Check 2: Config exists
+        if (typeof firebaseConfig !== 'undefined') {
+            checks.push({ name: 'firebaseConfig object exists', status: true });
+            
+            // Check 3-8: All required fields
+            const requiredFields = ['apiKey', 'authDomain', 'projectId', 'storageBucket', 'messagingSenderId', 'appId'];
+            requiredFields.forEach(field => {
+                if (firebaseConfig[field] && firebaseConfig[field] !== `YOUR_${field.toUpperCase().replace(/([A-Z])/g, '_$1').slice(1)}`) {
+                    const hasPlaceholder = firebaseConfig[field].includes('YOUR_');
+                    checks.push({ 
+                        name: `${field} is set`, 
+                        status: !hasPlaceholder,
+                        value: hasPlaceholder ? 'Still has placeholder' : '✓ Valid'
+                    });
+                    if (hasPlaceholder) allPassed = false;
+                } else {
+                    checks.push({ name: `${field} is set`, status: false, value: 'Missing or placeholder' });
+                    allPassed = false;
+                }
+            });
+
+            // Check 9: Firebase initialized
+            try {
+                const app = firebase.app();
+                checks.push({ name: 'Firebase initialized successfully', status: true, value: `App: ${app.name}` });
+            } catch (error) {
+                checks.push({ name: 'Firebase initialized successfully', status: false, value: error.message });
+                allPassed = false;
+            }
+
+            // Check 10: Auth available
+            try {
+                const auth = firebase.auth();
+                checks.push({ name: 'Firebase Auth available', status: true });
+            } catch (error) {
+                checks.push({ name: 'Firebase Auth available', status: false, value: error.message });
+                allPassed = false;
+            }
+
+        } else {
+            checks.push({ name: 'firebaseConfig object exists', status: false });
+            allPassed = false;
+        }
+
+        // Display results
+        let html = '<div class="info">';
+        checks.forEach(check => {
+            const icon = check.status ? '✓' : '✗';
+            const color = check.status ? 'check' : 'error';
+            html += `<p class="${color}">${icon} ${check.name}`;
+            if (check.value) {
+                html += ` <span style="color: #9ca3af;">(${check.value})</span>`;
+            }
+            html += '</p>';
+        });
+        html += '</div>';
+
+        if (allPassed) {
+            html += '<div class="info" style="background: #065f46; border: 2px solid #4ade80;">';
+            html += '<h2 style="color: #4ade80;">✅ All Checks Passed!</h2>';
+            html += '<p>Your Firebase configuration is valid and ready to use.</p>';
+            html += '<p>You can now test login at <a href="index.html" style="color: #60a5fa;">index.html</a></p>';
+            html += '</div>';
+        } else {
+            html += '<div class="info" style="background: #7f1d1d; border: 2px solid #f87171;">';
+            html += '<h2 style="color: #f87171;">❌ Some Checks Failed</h2>';
+            html += '<p>Please review the errors above and update your firebase-config.js file.</p>';
+            html += '</div>';
+        }
+
+        resultsDiv.innerHTML = html;
+    </script>
+</body>
+</html>
+

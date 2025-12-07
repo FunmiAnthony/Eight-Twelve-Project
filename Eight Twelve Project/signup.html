@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>8:12 | Sign Up</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- Top bar -->
+    <header class="top-bar">
+      <div class="container">
+        <div class="logo">8:12</div>
+        <div class="nav-text">Sign Up</div>
+      </div>
+    </header>
+
+    <!-- Main content -->
+    <main class="page">
+      <div class="login-card">
+        <h1>Create an account</h1>
+        <p class="tagline">Join our faith-based community.</p>
+
+        <form id="signupForm">
+          <!-- Email -->
+          <div class="form-group">
+            <label for="signupEmail">Email</label>
+            <input
+              id="signupEmail"
+              type="email"
+              placeholder="you@example.com"
+              required
+            />
+          </div>
+
+          <!-- Create Password + show/hide -->
+          <div class="form-group">
+            <label for="signupPassword">Create Password</label>
+            <div class="password-row">
+              <input
+                id="signupPassword"
+                type="password"
+                placeholder="Create a password (min. 6 characters)"
+                required
+                minlength="6"
+              />
+              <button
+                type="button"
+                id="toggleSignupPassword"
+                class="toggle-password"
+              >
+                Show
+              </button>
+            </div>
+          </div>
+
+          <!-- Verify Password -->
+          <div class="form-group">
+            <label for="confirmPassword">Verify Password</label>
+            <div class="password-row">
+              <input
+                id="confirmPassword"
+                type="password"
+                placeholder="Verify your password"
+                required
+                minlength="6"
+              />
+              <button
+                type="button"
+                id="toggleConfirmPassword"
+                class="toggle-password"
+              >
+                Show
+              </button>
+            </div>
+          </div>
+
+          <!-- Create Account button -->
+          <button type="submit" class="btn-primary">Create Account</button>
+
+          <!-- Helper text -->
+          <p class="helper-text">
+            Already have an account?
+            <a href="index.html">Log in</a>
+          </p>
+
+          <!-- Message area -->
+          <p id="signupMessage" class="message"></p>
+        </form>
+      </div>
+    </main>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="firebase-config.js"></script>
+    <script src="signup.js"></script>
+  </body>
+</html>
+
