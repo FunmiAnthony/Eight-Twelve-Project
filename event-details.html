@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>8:12 | Event Details</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body class="event-details-page">
+    <!-- Top bar -->
+    <header class="top-bar">
+      <div class="container">
+        <div class="logo">8:12</div>
+        <div class="nav-text">Event Details</div>
+      </div>
+    </header>
+
+    <!-- Main content -->
+    <main class="page">
+      <div class="event-details-card">
+        <h1>Event Details</h1>
+        <p class="tagline">Faith-based events and connections.</p>
+
+        <div class="event-content">
+          <!-- Event information will be displayed here -->
+          <div class="event-section">
+            <h2>Upcoming Events</h2>
+            <p class="event-description">
+              Welcome to 8:12! Here you can view and manage your faith-based events.
+            </p>
+          </div>
+
+          <!-- Collaboration Section -->
+          <div class="event-section collaboration-section">
+            <div class="collaboration-header">
+              <h2>Collaboration</h2>
+              <button id="inviteCollaboratorBtn" class="btn-secondary">
+                <span>+</span> Invite Collaborator
+              </button>
+            </div>
+
+            <!-- Active Collaborators -->
+            <div class="collaborators-list">
+              <h3>Active Collaborators</h3>
+              <div id="activeCollaborators" class="collaborators-grid">
+                <p class="no-collaborators">No active collaborators</p>
+              </div>
+            </div>
+
+            <!-- Invited Collaborators -->
+            <div class="collaborators-list">
+              <h3>Invited Collaborators</h3>
+              <div id="invitedCollaborators" class="collaborators-grid">
+                <p class="no-collaborators">No invited collaborators</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Comments Section -->
+          <div class="event-section comments-section">
+            <h2>Comments & Notes</h2>
+            <div class="comment-form">
+              <textarea 
+                id="commentInput" 
+                placeholder="Add a comment or note..."
+                rows="3"
+              ></textarea>
+              <button id="addCommentBtn" class="btn-secondary">Post Comment</button>
+            </div>
+            <div id="commentsList" class="comments-list">
+              <p class="no-comments">No comments yet. Be the first to comment!</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Invite Collaborator Modal -->
+        <div id="inviteModal" class="modal">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h3>Invite Collaborator</h3>
+              <button class="modal-close" id="closeModal">&times;</button>
+            </div>
+            <div class="modal-body">
+              <label for="collaboratorEmail">Email Address</label>
+              <input 
+                type="email" 
+                id="collaboratorEmail" 
+                placeholder="collaborator@example.com"
+              />
+              <p id="inviteMessage" class="message"></p>
+            </div>
+            <div class="modal-footer">
+              <button id="cancelInviteBtn" class="btn-secondary">Cancel</button>
+              <button id="sendInviteBtn" class="btn-primary">Send Invite</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+    <script src="firebase-config.js"></script>
+    <script src="event-details.js"></script>
+  </body>
+</html>
+
