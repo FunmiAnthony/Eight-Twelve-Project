@@ -234,19 +234,19 @@ createEventForm.addEventListener("submit", async function(e) {
     // Save to Firestore
     const docRef = await db.collection('events').add(eventData);
 
-    // Prepare data for summary page
+    // Prepare data for summary page (URLSearchParams will handle encoding)
     const summaryData = {
-      title: encodeURIComponent(title),
-      description: encodeURIComponent(description),
-      date: encodeURIComponent(formattedDate),
-      time: encodeURIComponent(formattedTime),
-      location: encodeURIComponent(location),
-      price: encodeURIComponent(isFree ? 'Free' : `$${price.toFixed(2)}`),
-      attendees: attendees ? encodeURIComponent(attendees.toString()) : '',
-      flyerUrl: flyerUrl ? encodeURIComponent(flyerUrl) : ''
+      title: title,
+      description: description,
+      date: formattedDate,
+      time: formattedTime,
+      location: location,
+      price: isFree ? 'Free' : `$${price.toFixed(2)}`,
+      attendees: attendees ? attendees.toString() : '',
+      flyerUrl: flyerUrl || ''
     };
 
-    // Build URL with event data
+    // Build URL with event data (URLSearchParams automatically encodes)
     const queryString = new URLSearchParams(summaryData).toString();
     
     // Redirect to event summary page

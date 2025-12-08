@@ -39,52 +39,70 @@ function getUrlParams() {
 
 // Display event summary
 function displayEventSummary() {
-  const params = getUrlParams();
-  
-  // Decode URL parameters
-  const title = decodeURIComponent(params.title || '');
-  const description = decodeURIComponent(params.description || '');
-  const date = decodeURIComponent(params.date || '');
-  const time = decodeURIComponent(params.time || '');
-  const location = decodeURIComponent(params.location || '');
-  const price = decodeURIComponent(params.price || 'Free');
-  const attendees = params.attendees || '';
-  const flyerUrl = params.flyerUrl ? decodeURIComponent(params.flyerUrl) : '';
+  try {
+    const params = getUrlParams();
+    
+    // Decode URL parameters
+    const title = decodeURIComponent(params.title || '');
+    const description = decodeURIComponent(params.description || '');
+    const date = decodeURIComponent(params.date || '');
+    const time = decodeURIComponent(params.time || '');
+    const location = decodeURIComponent(params.location || '');
+    const price = decodeURIComponent(params.price || 'Free');
+    const attendees = params.attendees || '';
+    const flyerUrl = params.flyerUrl ? decodeURIComponent(params.flyerUrl) : '';
 
-  // Update summary elements
-  document.getElementById('summaryTitle').textContent = title;
-  document.getElementById('summaryDate').textContent = date;
-  document.getElementById('summaryTime').textContent = time;
-  document.getElementById('summaryLocation').textContent = location;
-  document.getElementById('summaryPrice').textContent = price;
-  document.getElementById('summaryDescription').textContent = description;
+    // Update summary elements with safety checks
+    const summaryTitle = document.getElementById('summaryTitle');
+    const summaryDate = document.getElementById('summaryDate');
+    const summaryTime = document.getElementById('summaryTime');
+    const summaryLocation = document.getElementById('summaryLocation');
+    const summaryPrice = document.getElementById('summaryPrice');
+    const summaryDescription = document.getElementById('summaryDescription');
 
-  // Show attendees if provided
-  if (attendees) {
-    document.getElementById('summaryAttendees').textContent = attendees;
-    document.getElementById('summaryAttendeesContainer').style.display = 'flex';
-  } else {
-    document.getElementById('summaryAttendeesContainer').style.display = 'none';
-  }
+    if (summaryTitle) summaryTitle.textContent = title;
+    if (summaryDate) summaryDate.textContent = date;
+    if (summaryTime) summaryTime.textContent = time;
+    if (summaryLocation) summaryLocation.textContent = location;
+    if (summaryPrice) summaryPrice.textContent = price;
+    if (summaryDescription) summaryDescription.textContent = description;
 
-  // Show flyer if provided
-  const summaryFlyer = document.getElementById('summaryFlyer');
-  const summaryPlaceholder = document.getElementById('summaryPlaceholder');
-  
-  if (flyerUrl) {
-    summaryFlyer.src = flyerUrl;
-    summaryFlyer.style.display = 'block';
-    summaryPlaceholder.style.display = 'none';
-  } else {
-    summaryFlyer.style.display = 'none';
-    summaryPlaceholder.style.display = 'flex';
+    // Show attendees if provided
+    const summaryAttendees = document.getElementById('summaryAttendees');
+    const summaryAttendeesContainer = document.getElementById('summaryAttendeesContainer');
+    if (attendees && summaryAttendees && summaryAttendeesContainer) {
+      summaryAttendees.textContent = attendees;
+      summaryAttendeesContainer.style.display = 'flex';
+    } else if (summaryAttendeesContainer) {
+      summaryAttendeesContainer.style.display = 'none';
+    }
+
+    // Show flyer if provided
+    const summaryFlyer = document.getElementById('summaryFlyer');
+    const summaryPlaceholder = document.getElementById('summaryPlaceholder');
+    
+    if (flyerUrl && summaryFlyer && summaryPlaceholder) {
+      summaryFlyer.src = flyerUrl;
+      summaryFlyer.style.display = 'block';
+      summaryPlaceholder.style.display = 'none';
+    } else if (summaryFlyer && summaryPlaceholder) {
+      summaryFlyer.style.display = 'none';
+      summaryPlaceholder.style.display = 'flex';
+    }
+  } catch (error) {
+    console.error('Error displaying event summary:', error);
   }
 }
 
 // Create another event handler
-document.getElementById('createAnotherBtn').addEventListener('click', function() {
-  window.location.href = 'create-event.html';
-});
+function setupCreateAnotherBtn() {
+  const createAnotherBtn = document.getElementById('createAnotherBtn');
+  if (createAnotherBtn) {
+    createAnotherBtn.addEventListener('click', function() {
+      window.location.href = 'create-event.html';
+    });
+  }
+}
 
 // Logout functionality
 function setupLogout() {
@@ -105,8 +123,11 @@ function setupLogout() {
   }
 }
 
-// Initialize
-checkAuth();
-displayEventSummary();
-setupLogout();
+// Initialize when DOM is ready
+document.addEventListener('DOMContentLoaded', function() {
+  checkAuth();
+  displayEventSummary();
+  setupLogout();
+  setupCreateAnotherBtn();
+});
 
