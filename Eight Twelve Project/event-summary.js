@@ -14,11 +14,29 @@ function checkAuth() {
   if (auth) {
     auth.onAuthStateChanged(function(user) {
       if (!user) {
-        window.location.href = "index.html";
+        // Only redirect if we're sure user is not authenticated
+        // Give Firebase a moment to initialize
+        setTimeout(function() {
+          if (!auth.currentUser) {
+            window.location.href = "index.html";
+          }
+        }, 500);
       }
     });
   } else {
-    setTimeout(checkAuth, 100);
+    // Retry checking auth, but limit retries
+    let retries = 0;
+    const maxRetries = 50; // 5 seconds max wait
+    const checkInterval = setInterval(function() {
+      retries++;
+      const auth = getAuth();
+      if (auth || retries >= maxRetries) {
+        clearInterval(checkInterval);
+        if (auth) {
+          checkAuth();
+        }
+      }
+    }, 100);
   }
 }
 
@@ -42,15 +60,33 @@ function displayEventSummary() {
   try {
     const params = getUrlParams();
     
-    // Decode URL parameters
-    const title = decodeURIComponent(params.title || '');
-    const description = decodeURIComponent(params.description || '');
-    const date = decodeURIComponent(params.date || '');
-    const time = decodeURIComponent(params.time || '');
-    const location = decodeURIComponent(params.location || '');
-    const price = decodeURIComponent(params.price || 'Free');
+    // Helper function to safely decode URL parameters
+    function safeDecode(value) {
+      if (!value) return '';
+      try {
+        return decodeURIComponent(value);
+      } catch (e) {
+        console.warn('Error decoding parameter:', e);
+        return value; // Return as-is if decoding fails
+      }
+    }
+    
+    // Decode URL parameters safely
+    const title = safeDecode(params.title);
+    const description = safeDecode(params.description);
+    const date = safeDecode(params.date);
+    const time = safeDecode(params.time);
+    const location = safeDecode(params.location);
+    const price = safeDecode(params.price) || 'Free';
     const attendees = params.attendees || '';
-    const flyerUrl = params.flyerUrl ? decodeURIComponent(params.flyerUrl) : '';
+    
+    // Check if flyer URL was stored in sessionStorage (for large base64 images)
+    let flyerUrl = params.flyerUrl ? safeDecode(params.flyerUrl) : '';
+    if (flyerUrl === 'stored') {
+      flyerUrl = sessionStorage.getItem('eventFlyerUrl') || '';
+      // Clean up after retrieving
+      sessionStorage.removeItem('eventFlyerUrl');
+    }
 
     // Update summary elements with safety checks
     const summaryTitle = document.getElementById('summaryTitle');
@@ -60,12 +96,13 @@ function displayEventSummary() {
     const summaryPrice = document.getElementById('summaryPrice');
     const summaryDescription = document.getElementById('summaryDescription');
 
-    if (summaryTitle) summaryTitle.textContent = title;
-    if (summaryDate) summaryDate.textContent = date;
-    if (summaryTime) summaryTime.textContent = time;
-    if (summaryLocation) summaryLocation.textContent = location;
-    if (summaryPrice) summaryPrice.textContent = price;
-    if (summaryDescription) summaryDescription.textContent = description;
+    // Update summary elements with safety checks and fallbacks
+    if (summaryTitle) summaryTitle.textContent = title || 'Event Title';
+    if (summaryDate) summaryDate.textContent = date || 'Not specified';
+    if (summaryTime) summaryTime.textContent = time || 'Not specified';
+    if (summaryLocation) summaryLocation.textContent = location || 'Not specified';
+    if (summaryPrice) summaryPrice.textContent = price || 'Free';
+    if (summaryDescription) summaryDescription.textContent = description || 'No description provided.';
 
     // Show attendees if provided
     const summaryAttendees = document.getElementById('summaryAttendees');
@@ -125,9 +162,17 @@ function setupLogout() {
 
 // Initialize when DOM is ready
 document.addEventListener('DOMContentLoaded', function() {
-  checkAuth();
-  displayEventSummary();
+  console.log('Event Summary page loaded');
+  console.log('URL parameters:', window.location.search);
+  
+  // Setup event handlers first
   setupLogout();
   setupCreateAnotherBtn();
+  
+  // Check auth and display summary
+  checkAuth();
+  displayEventSummary();
+  
+  console.log('Event Summary page initialized');
 });
 

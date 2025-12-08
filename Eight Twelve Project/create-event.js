@@ -234,6 +234,13 @@ createEventForm.addEventListener("submit", async function(e) {
     // Save to Firestore
     const docRef = await db.collection('events').add(eventData);
 
+    // Store flyer URL in sessionStorage if it's too long for URL (base64 images can be very long)
+    // URLs have practical limits around 2000-8000 characters depending on browser
+    if (flyerUrl && flyerUrl.length > 2000) {
+      sessionStorage.setItem('eventFlyerUrl', flyerUrl);
+      flyerUrl = 'stored'; // Use a marker instead
+    }
+
     // Prepare data for summary page (URLSearchParams will handle encoding)
     const summaryData = {
       title: title,
@@ -249,8 +256,14 @@ createEventForm.addEventListener("submit", async function(e) {
     // Build URL with event data (URLSearchParams automatically encodes)
     const queryString = new URLSearchParams(summaryData).toString();
     
-    // Redirect to event summary page
-    window.location.href = `event-summary.html?${queryString}`;
+    // Show success message briefly before redirecting
+    showMessage("Event created successfully! Redirecting to summary...", "success");
+    
+    // Redirect to event summary page after a brief delay to show success message
+    setTimeout(() => {
+      console.log('Redirecting to event summary page...');
+      window.location.href = `event-summary.html?${queryString}`;
+    }, 500);
 
   } catch (error) {
     console.error("Error creating event:", error);
