@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>8:12 | Create Event</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body class="create-event-page">
+    <!-- Top bar -->
+    <header class="top-bar">
+      <div class="container">
+        <div class="logo">8:12</div>
+        <div class="nav-text">Create Event</div>
+        <a href="event-details.html" class="back-link">← Back to Events</a>
+      </div>
+    </header>
+
+    <!-- Main content -->
+    <main class="page">
+      <div class="create-event-card">
+        <h1>Create a Faith-Based Event</h1>
+        <p class="tagline">Share your event with the community and build meaningful connections.</p>
+
+        <!-- Event Creation Form -->
+        <form id="createEventForm" class="event-form">
+          <!-- Event Title -->
+          <div class="form-group">
+            <label for="eventTitle">Event Title</label>
+            <input
+              id="eventTitle"
+              type="text"
+              placeholder="e.g., Sunday Morning Worship Service"
+              required
+              maxlength="100"
+            />
+          </div>
+
+          <!-- Event Description -->
+          <div class="form-group">
+            <label for="eventDescription">Description</label>
+            <textarea
+              id="eventDescription"
+              rows="5"
+              placeholder="Share details about your event, what attendees can expect, and why it's meaningful..."
+              required
+              maxlength="1000"
+            ></textarea>
+            <span class="char-count"><span id="descCharCount">0</span>/1000</span>
+          </div>
+
+          <!-- Date and Time Row -->
+          <div class="form-row">
+            <div class="form-group">
+              <label for="eventDate">Date</label>
+              <input
+                id="eventDate"
+                type="date"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="eventTime">Time</label>
+              <input
+                id="eventTime"
+                type="time"
+                required
+              />
+            </div>
+          </div>
+
+          <!-- Location -->
+          <div class="form-group">
+            <label for="eventLocation">Location</label>
+            <input
+              id="eventLocation"
+              type="text"
+              placeholder="e.g., Main Sanctuary, 123 Faith Street"
+              required
+              maxlength="200"
+            />
+          </div>
+
+          <!-- Expected Attendees -->
+          <div class="form-group">
+            <label for="eventAttendees">Expected Number of Attendees</label>
+            <input
+              id="eventAttendees"
+              type="number"
+              placeholder="e.g., 50"
+              min="1"
+              max="10000"
+            />
+          </div>
+
+          <!-- Pricing Section -->
+          <div class="form-group">
+            <label for="eventPrice">Ticket Price</label>
+            <div class="price-input-row">
+              <div class="price-input-wrapper">
+                <span class="currency-symbol">$</span>
+                <input
+                  id="eventPrice"
+                  type="number"
+                  placeholder="0.00"
+                  min="0"
+                  step="0.01"
+                  disabled
+                />
+              </div>
+              <label class="toggle-label">
+                <input type="checkbox" id="freeEventToggle" />
+                <span class="toggle-slider"></span>
+                <span class="toggle-text">Free Event</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Event Flyer Upload -->
+          <div class="form-group">
+            <label for="eventFlyer">Event Flyer (Optional)</label>
+            <div class="file-upload-container">
+              <input
+                type="file"
+                id="eventFlyer"
+                accept="image/*"
+                class="file-input"
+              />
+              <label for="eventFlyer" class="file-upload-label">
+                <span class="upload-icon">📷</span>
+                <span class="upload-text">Choose an image or drag it here</span>
+              </label>
+              <div id="imagePreview" class="image-preview hidden">
+                <img id="previewImage" src="" alt="Event flyer preview" />
+                <button type="button" id="removeImage" class="remove-image-btn">×</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Submit Button -->
+          <button type="submit" class="btn-primary" id="submitBtn">
+            Create Event
+          </button>
+
+          <!-- Message area -->
+          <p id="formMessage" class="message"></p>
+        </form>
+      </div>
+    </main>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+    <script src="firebase-config.js"></script>
+    <script src="create-event.js"></script>
+  </body>
+</html>
+

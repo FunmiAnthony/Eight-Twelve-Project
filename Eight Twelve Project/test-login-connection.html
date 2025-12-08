@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>8:12 | Test Login Connection</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <style>
+      .test-container {
+        max-width: 600px;
+        margin: 2rem auto;
+        padding: 2rem;
+        background: rgba(15, 23, 42, 0.96);
+        border-radius: 18px;
+        border: 1px solid #1f2937;
+      }
+      .test-step {
+        background: rgba(2, 6, 23, 0.5);
+        padding: 1rem;
+        margin: 1rem 0;
+        border-radius: 8px;
+        border-left: 3px solid #3b82f6;
+      }
+      .test-step h3 {
+        color: #60a5fa;
+        margin-bottom: 0.5rem;
+      }
+      .test-result {
+        margin-top: 0.5rem;
+        padding: 0.5rem;
+        border-radius: 4px;
+      }
+      .success {
+        background: rgba(34, 197, 94, 0.1);
+        color: #86efac;
+        border: 1px solid rgba(34, 197, 94, 0.3);
+      }
+      .error {
+        background: rgba(239, 68, 68, 0.1);
+        color: #fca5a5;
+        border: 1px solid rgba(239, 68, 68, 0.3);
+      }
+      .info {
+        background: rgba(59, 130, 246, 0.1);
+        color: #93c5fd;
+        border: 1px solid rgba(59, 130, 246, 0.3);
+      }
+    </style>
+  </head>
+  <body class="event-details-page">
+    <header class="top-bar">
+      <div class="container">
+        <div class="logo">8:12</div>
+        <div class="nav-text">Test Login Connection</div>
+        <a href="index.html" class="back-link">← Back to Login</a>
+      </div>
+    </header>
+
+    <main class="page">
+      <div class="test-container">
+        <h1>Test Firebase Login Connection</h1>
+        <p class="tagline">Verify that account creation and login are properly connected.</p>
+
+        <div class="test-step">
+          <h3>Step 1: Check Firebase Configuration</h3>
+          <div id="configResult" class="test-result info">Checking...</div>
+        </div>
+
+        <div class="test-step">
+          <h3>Step 2: Check Firebase Authentication</h3>
+          <div id="authResult" class="test-result info">Checking...</div>
+        </div>
+
+        <div class="test-step">
+          <h3>Step 3: Test Account Creation</h3>
+          <p style="color: #9ca3af; font-size: 0.9rem; margin-bottom: 0.5rem;">
+            Go to <a href="signup.html" style="color: #60a5fa;">signup.html</a> to create a test account.
+          </p>
+          <div id="signupResult" class="test-result info">Waiting for account creation...</div>
+        </div>
+
+        <div class="test-step">
+          <h3>Step 4: Test Login</h3>
+          <p style="color: #9ca3af; font-size: 0.9rem; margin-bottom: 0.5rem;">
+            Go to <a href="index.html" style="color: #60a5fa;">index.html</a> to test login with the created account.
+          </p>
+          <div id="loginResult" class="test-result info">Waiting for login test...</div>
+        </div>
+
+        <div style="margin-top: 2rem; text-align: center;">
+          <a href="signup.html" class="btn-primary" style="text-decoration: none; display: inline-block; margin-right: 1rem;">
+            Create Test Account
+          </a>
+          <a href="index.html" class="btn-secondary" style="text-decoration: none; display: inline-block;">
+            Test Login
+          </a>
+        </div>
+      </div>
+    </main>
+
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="firebase-config.js"></script>
+    <script>
+      // Check Firebase Configuration
+      const configResult = document.getElementById('configResult');
+      if (typeof firebase !== 'undefined' && firebaseConfig) {
+        if (firebaseConfig.apiKey && firebaseConfig.apiKey !== 'YOUR_API_KEY') {
+          configResult.className = 'test-result success';
+          configResult.textContent = '✓ Firebase configuration is set up correctly';
+        } else {
+          configResult.className = 'test-result error';
+          configResult.textContent = '✗ Firebase configuration needs to be updated with your credentials';
+        }
+      } else {
+        configResult.className = 'test-result error';
+        configResult.textContent = '✗ Firebase is not loaded';
+      }
+
+      // Check Firebase Authentication
+      const authResult = document.getElementById('authResult');
+      if (typeof firebase !== 'undefined' && firebase.auth) {
+        const auth = firebase.auth();
+        authResult.className = 'test-result success';
+        authResult.textContent = '✓ Firebase Authentication is initialized';
+        
+        // Check if user is logged in
+        auth.onAuthStateChanged((user) => {
+          if (user) {
+            const loginResult = document.getElementById('loginResult');
+            loginResult.className = 'test-result success';
+            loginResult.textContent = `✓ Currently logged in as: ${user.email}`;
+          }
+        });
+      } else {
+        authResult.className = 'test-result error';
+        authResult.textContent = '✗ Firebase Authentication is not available';
+      }
+
+      // Instructions
+      const signupResult = document.getElementById('signupResult');
+      signupResult.textContent = '→ Create a test account to verify signup works';
+
+      const loginResult = document.getElementById('loginResult');
+      loginResult.textContent = '→ Log in with your created account to verify login works';
+    </script>
+  </body>
+</html>
+

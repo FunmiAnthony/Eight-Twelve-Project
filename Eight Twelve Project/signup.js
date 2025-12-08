@@ -63,12 +63,16 @@ signupForm.addEventListener("submit", async function (event) {
     const userCredential = await auth.createUserWithEmailAndPassword(email, password);
     const user = userCredential.user;
     
-    showMessage("Account created successfully! Redirecting...", "success");
+    // Verify account was created
+    console.log("Account created successfully:", user.email);
+    console.log("User UID:", user.uid);
+    
+    showMessage("Account created successfully! You can now log in with these credentials. Redirecting...", "success");
     
     // Redirect to Event Details page after successful signup
     setTimeout(() => {
       window.location.href = "event-details.html";
-    }, 1000);
+    }, 1500);
   } catch (error) {
     // Handle errors
     let errorMessage = "An error occurred during signup. Please try again.";

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>8:12 | Event Summary</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body class="event-details-page">
+    <!-- Top bar -->
+    <header class="top-bar">
+      <div class="container">
+        <div class="logo">8:12</div>
+        <div class="nav-text">Event Summary</div>
+        <button id="logoutBtn" class="logout-btn">Logout</button>
+      </div>
+    </header>
+
+    <!-- Main content -->
+    <main class="page">
+      <div class="event-details-card">
+        <div class="celebration-container">
+          <div class="celebration-animation">
+            <div class="confetti confetti-1"></div>
+            <div class="confetti confetti-2"></div>
+            <div class="confetti confetti-3"></div>
+            <div class="confetti confetti-4"></div>
+            <div class="confetti confetti-5"></div>
+            <div class="confetti confetti-6"></div>
+            <div class="confetti confetti-7"></div>
+            <div class="confetti confetti-8"></div>
+            <div class="celebration-icon">🎉</div>
+          </div>
+          <h1 class="celebration-title">Your Event has been Created!</h1>
+          <p class="tagline">Your event has been created and is ready to share.</p>
+        </div>
+
+        <!-- Event Summary Card -->
+        <div class="event-summary-card">
+          <div class="summary-flyer">
+            <img id="summaryFlyer" src="" alt="Event flyer" style="display: none;" />
+            <div class="flyer-placeholder" id="summaryPlaceholder">
+              <span>No Image</span>
+            </div>
+          </div>
+          <div class="summary-content">
+            <h3 id="summaryTitle"></h3>
+            <div class="summary-details">
+              <div class="summary-item">
+                <span class="summary-label">📅 Date:</span>
+                <span id="summaryDate"></span>
+              </div>
+              <div class="summary-item">
+                <span class="summary-label">🕐 Time:</span>
+                <span id="summaryTime"></span>
+              </div>
+              <div class="summary-item">
+                <span class="summary-label">📍 Location:</span>
+                <span id="summaryLocation"></span>
+              </div>
+              <div class="summary-item">
+                <span class="summary-label">💰 Price:</span>
+                <span id="summaryPrice" class="price-badge"></span>
+              </div>
+              <div class="summary-item" id="summaryAttendeesContainer" style="display: none;">
+                <span class="summary-label">👥 Expected Attendees:</span>
+                <span id="summaryAttendees"></span>
+              </div>
+            </div>
+            <div class="summary-description">
+              <h4 style="color: #e5e7eb; margin-bottom: 0.8rem; font-size: 1rem;">Description</h4>
+              <p id="summaryDescription"></p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="confirmation-actions" style="margin-top: 2rem;">
+          <button type="button" class="btn-secondary" id="createAnotherBtn">
+            Create Another Event
+          </button>
+          <a href="event-details.html" class="btn-primary" style="text-decoration: none; display: inline-block;">
+            Back to Events
+          </a>
+        </div>
+      </div>
+    </main>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+    <script src="firebase-config.js"></script>
+    <script src="event-summary.js"></script>
+  </body>
+</html>
+

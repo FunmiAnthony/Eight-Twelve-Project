@@ -51,6 +51,10 @@ loginForm.addEventListener("submit", async function (event) {
     const userCredential = await auth.signInWithEmailAndPassword(email, password);
     const user = userCredential.user;
     
+    // Verify login was successful
+    console.log("Login successful:", user.email);
+    console.log("User UID:", user.uid);
+    
     showMessage("Login successful! Redirecting...", "success");
     
     // Redirect to Event Details page after successful login

@@ -23,77 +23,15 @@
         <p class="tagline">Faith-based events and connections.</p>
 
         <div class="event-content">
-          <!-- Event information will be displayed here -->
-          <div class="event-section">
-            <h2>Upcoming Events</h2>
-            <p class="event-description">
-              Welcome to 8:12! Here you can view and manage your faith-based events.
+          <!-- Simple Create Event Button -->
+          <div class="event-section" style="text-align: center; padding: 3rem 0;">
+            <h2 style="margin-bottom: 1.5rem; color: #f9fafb;">Welcome to 8:12</h2>
+            <p class="event-description" style="margin-bottom: 2.5rem; max-width: 500px; margin-left: auto; margin-right: auto;">
+              Create and manage your faith-based events. Start by creating your first event.
             </p>
-          </div>
-
-          <!-- Collaboration Section -->
-          <div class="event-section collaboration-section">
-            <div class="collaboration-header">
-              <h2>Collaboration</h2>
-              <button id="inviteCollaboratorBtn" class="btn-secondary">
-                <span>+</span> Invite Collaborator
-              </button>
-            </div>
-
-            <!-- Active Collaborators -->
-            <div class="collaborators-list">
-              <h3>Active Collaborators</h3>
-              <div id="activeCollaborators" class="collaborators-grid">
-                <p class="no-collaborators">No active collaborators</p>
-              </div>
-            </div>
-
-            <!-- Invited Collaborators -->
-            <div class="collaborators-list">
-              <h3>Invited Collaborators</h3>
-              <div id="invitedCollaborators" class="collaborators-grid">
-                <p class="no-collaborators">No invited collaborators</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Comments Section -->
-          <div class="event-section comments-section">
-            <h2>Comments & Notes</h2>
-            <div class="comment-form">
-              <textarea 
-                id="commentInput" 
-                placeholder="Add a comment or note..."
-                rows="3"
-              ></textarea>
-              <button id="addCommentBtn" class="btn-secondary">Post Comment</button>
-            </div>
-            <div id="commentsList" class="comments-list">
-              <p class="no-comments">No comments yet. Be the first to comment!</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Invite Collaborator Modal -->
-        <div id="inviteModal" class="modal">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h3>Invite Collaborator</h3>
-              <button class="modal-close" id="closeModal">&times;</button>
-            </div>
-            <div class="modal-body">
-              <label for="collaboratorEmail">Email Address</label>
-              <input 
-                type="email" 
-                id="collaboratorEmail" 
-                placeholder="collaborator@example.com"
-              />
-              <p id="inviteMessage" class="message"></p>
-            </div>
-            <div class="modal-footer">
-              <button id="cancelInviteBtn" class="btn-secondary">Cancel</button>
-              <button id="sendInviteBtn" class="btn-primary">Send Invite</button>
-            </div>
+            <a href="create-event.html" class="btn-primary" style="text-decoration: none; display: inline-block; padding: 1rem 2.5rem; font-size: 1.1rem;">
+              <span style="font-size: 1.3rem; margin-right: 0.5rem;">+</span> Create Event
+            </a>
           </div>
         </div>
       </div>
